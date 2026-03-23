@@ -1,0 +1,65 @@
+<div class="login-page">
+
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+
+      <!-- SINISTRA (branding) -->
+      <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-center align-items-center left-side text-white">
+        <h1 class="display-3 fw-bold mb-3">🍽️ EatUp</h1>
+        <p class="lead text-center w-75">
+          Organizza le tue ricette e pianifica la settimana in modo semplice e veloce.
+        </p>
+      </div>
+
+      <!-- DESTRA (login) -->
+      <div class="col-lg-6 d-flex justify-content-center align-items-center right-side">
+
+        <div class="login-card shadow-lg">
+
+          <div class="mb-4 text-center">
+            <h2 class="fw-bold">Bentornato 👋</h2>
+            <p class="text-muted">Accedi al tuo account</p>
+          </div>
+
+          <form (submit)="onLogin(); $event.preventDefault()">
+
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="email" placeholder="Email">
+              <label for="email">Email</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="password" placeholder="Password">
+              <label for="password">Password</label>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <input type="checkbox" id="remember">
+                <label for="remember" class="ms-1 small">Ricordami</label>
+              </div>
+              <a href="#" class="small text-decoration-none">Password dimenticata?</a>
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100 mb-3">
+              Accedi
+            </button>
+
+            <div class="text-center">
+              <span class="small text-muted">Non hai un account?</span>
+              <a href="#" class="small fw-bold text-decoration-none ms-1"
+              (click)="goToRegister()">
+                Registrati
+              </a>
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

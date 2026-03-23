@@ -1,0 +1,39 @@
+.login-page {
+  height: 100vh;
+}
+
+/* lato sinistro */
+.left-side {
+  background: linear-gradient(135deg, #df5e02, #d54400);
+  text-align: center;
+  padding: 2rem;
+}
+
+/* lato destro */
+.right-side {
+  background: #f8f9fa;
+}
+
+/* card login */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem;
+  border-radius: 20px;
+  background: white;
+}
+
+/* input */
+.form-control {
+  border-radius: 10px;
+}
+
+/* bottone */
+.btn-dark {
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.btn-dark:hover {
+  transform: translateY(-2px);
+}

@@ -1,0 +1,19 @@
+<app-header (Selected)="onNavigate($event)"></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      @if (active=="home") {
+        <app-home></app-home>
+      }@else if (active=="ingredients-recipes") {
+        <app-ingredients-recipes></app-ingredients-recipes>
+      }@else if (active=="week-program") {
+        <app-week-program></app-week-program>
+      }@else if (active=="login") {
+        <app-login (Selected)="onNavigate($event)"></app-login>
+      }@else if (active=="registration") {
+        <app-registration></app-registration>
+      }
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
