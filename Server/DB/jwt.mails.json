@@ -1,0 +1,263 @@
+[{
+  "username": "pippo@gmail.com",
+  "password": "pippo",
+  "oldPass": "pippo",
+  "mail": [
+    {
+      "from": "pluto@gmail.com",
+      "subject": "Richiesta informazioni",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "Curriculum vitae",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "fanny@gmail.com",
+      "subject": "Collegio Docenti",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "minnie@gmail.com",
+      "subject": "Auguri",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "Java Script",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "Offerta Vacanze",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "pluto@gmail.com",
+      "subject": "Dispense TIA Portal",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    }
+  ]
+},{
+  "username": "pluto@gmail.com",
+  "password": "pluto",
+  "oldPass": "pluto",
+  "mail": [
+    {
+      "from": "pippo@gmail.com",
+      "subject": "Promozione",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "minnie@gmail.com",
+      "subject": "Auguri",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "minnie@gmail.com",
+      "subject": "Fattura elettronica",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "pluto@gmail.com",
+      "subject": "Dispense TIA Portal",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "fanny@gmail.com",
+      "subject": "Collegio Docenti",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "pluto@gmail.com",
+      "subject": "Vola gratis",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sally@gmail.com",
+      "subject": "Android",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    }
+  ]
+},{
+  "username": "minnie@gmail.com",
+  "oldPass": "minnie",
+  "password": "minnie",
+  "mail": [
+    {
+      "from": "pippo@gmail.com",
+      "subject": "Verbale Condominio",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sally@gmail.com",
+      "subject": "Esercizi",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sandy@gmail.com",
+      "subject": "Griglia correzione",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "fanny@gmail.com",
+      "subject": "Collegio Docenti",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "Java Script",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sally@gmail.com",
+      "subject": "Android",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    }
+  ]
+},{
+  "username": "sonny@gmail.com",
+  "oldPass": "sonny",
+  "password": "sonny",
+  "mail": [
+    {
+      "from": "pluto@gmail.com",
+      "subject": "Corso di aggiornamento",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "JWT",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "pluto@gmail.com",
+      "subject": "Richiesta informazioni",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "Java Script",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "fanny@gmail.com",
+      "subject": "Collegio Docenti",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    }
+  ]
+},{
+  "username": "fanny@gmail.com",
+  "oldPass": "fanny",
+  "password": "fanny",
+  "mail": [
+    {
+      "from": "pippo@gmail.com",
+      "subject": "Auguri",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "pluto@gmail.com",
+      "subject": "Dispense TIA Portal",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sally@gmail.com",
+      "subject": "Android",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "Offerta Vacanze",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "fanny@gmail.com",
+      "subject": "Collegio Docenti",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "minnie@gmail.com",
+      "subject": "vlan",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    }
+  ]
+},{
+  "username": "sandy@gmail.com",
+  "oldPass": "sandy",
+  "password": "sandy",
+  "mail": [
+    {
+      "from": "sally@gmail.com",
+      "subject": "Android",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "minnie@gmail.com",
+      "subject": "vlan",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "pippo@gmail.com",
+      "subject": "Auguri",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sally@gmail.com",
+      "subject": "SQL Server",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "pluto@gmail.com",
+      "subject": "Dispense TIA Portal",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "jQuery",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sandy@gmail.com",
+      "subject": "https",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    }
+  ]
+},{
+  "username": "sally@gmail.com",
+  "oldPass": "sally",
+  "password": "sally",
+  "mail": [
+    {
+      "from": "pippo@gmail.com",
+      "subject": "Compleanno",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "jQuery",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sonny@gmail.com",
+      "subject": "IOS",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "fanny@gmail.com",
+      "subject": "Collegio Docenti",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "sandy@gmail.com",
+      "subject": "Android",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "from": "minnie@gmail.com",
+      "subject": "Corso di aggiornamento",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    }
+  ]
+}]
