@@ -113,7 +113,7 @@ app.post('/api/login', async function (req, res, next) {
         return;
     });
     const db = client.db(dbName);
-    const collection = client.db(dbName).collection("mails");
+    const collection = client.db(dbName).collection("users");
     const cmd = collection.findOne({ "username": username });
     cmd.then(function (dbUser) {
         if (!dbUser) {
@@ -200,21 +200,20 @@ app.get('/api/getCollections', async function (req, res, next) {
 });
 
 // nome della collezione passato come risorsa
-app.get('/api/mails', async function (req: any, res, next) {
-    const currentCollection: string = "mails"
-    let username = req.username
+app.get('/api/getIngredients', async function (req: any, res: any) {
+    const currentCollection: string = "ingredienti"
 
     const client = new MongoClient(connectionString!);
-    await client.connect().catch(err => {
+    await client.connect().catch((err: any) => {
         res.status(503).send("Errore di connessione al database");
         return;
     });
     const collection = client.db(dbName).collection(currentCollection);
-    let cmd = collection.findOne({ username: username }, { projection: { mail: 1 } });
-    cmd.then(function (data) {
+    const cmd = collection.find({}).toArray();
+    cmd.then(function (data: any) {
         res.send(data);
     });
-    cmd.catch(function (err) {
+    cmd.catch(function (err: any) {
         res.status(500).send("Errore lettura collezioni" + err);
     });
     cmd.finally(function () {

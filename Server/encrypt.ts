@@ -16,7 +16,7 @@ async function encrypt(){
         console.log("503 - Errore di connessione al DBMS");
         return;
     });
-    const collection = client.db(DBNAME).collection('mails');
+    const collection = client.db(DBNAME).collection('users');
 	// query 1 : lettura delle password
     const cmd = collection.find().project({"password":1}).toArray()
 	cmd.then(function(data){

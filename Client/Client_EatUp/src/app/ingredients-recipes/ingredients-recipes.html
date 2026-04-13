@@ -1,1 +1,69 @@
-<p>ingredients-recipes works!</p>
+<div class="border rounded-3 overflow-hidden d-flex" style="min-height: 420px;">
+
+  <aside class="ir-sidebar border-end" style="width: 210px; flex-shrink: 0; background: var(--bs-secondary-bg)">
+    <div class="px-3 py-2 border-bottom">
+      <span class="text-uppercase fw-medium text-secondary" style="font-size: 11px; letter-spacing: .08em">Categorie</span>
+    </div>
+    <ul class="list-unstyled mb-0">
+      @for (c of categories; track c; let ci = $index) {
+        <li>
+          <button class="w-100 bg-transparent border-0 border-bottom px-3 py-2 d-flex justify-content-between align-items-center text-start fw-medium"
+                  style="font-size: 13px"
+                  [attr.data-bs-toggle]="'collapse'"
+                  [attr.data-bs-target]="'#cat-' + ci"
+                  [attr.aria-expanded]="c.open"
+                  (click)="c.open = !c.open">
+            {{ c.categoria }}
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"
+                 [style.transform]="c.open ? 'rotate(90deg)' : 'none'" style="transition: transform .18s">
+              <path d="M4 2l4 4-4 4"/>
+            </svg>
+          </button>
+          <div class="collapse border-bottom" [id]="'cat-' + ci" [class.show]="c.open">
+            <ul class="list-unstyled mb-0">
+              @for (i of c.ingredienti; track i) {
+                <li class="px-4 py-2">
+                  <div class="form-check mb-0">
+                    <input class="form-check-input" type="checkbox" [id]="i.id" (change)="toggleIngredient(i)" />
+                    <label class="form-check-label" style="font-size: 13px" [for]="i.id">{{ i.nome }}</label>
+                  </div>
+                </li>
+              }
+            </ul>
+          </div>
+        </li>
+      }
+    </ul>
+  </aside>
+
+  <main class="flex-grow-1 p-3">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <span class="text-uppercase fw-medium text-secondary" style="font-size: 11px; letter-spacing: .08em">Ingredienti selezionati</span>
+      <span class="badge rounded-pill" style="background:#EEEDFE; color:#534AB7">{{ selectedIngredients.length }}</span>
+    </div>
+
+    @if (selectedIngredients.length === 0) {
+      <p class="text-secondary fst-italic" style="font-size: 13px">Nessun ingrediente selezionato</p>
+    } @else {
+      <div class="d-flex flex-wrap gap-2">
+        @for (s of selectedIngredients; track s) {
+          <span class="d-inline-flex align-items-center gap-2 rounded-pill px-3 py-1 border"
+                style="font-size: 12px; font-weight: 500; background:#EEEDFE; color:#3C3489; border-color:#AFA9EC !important">
+            {{ s?.nome ?? s?.name ?? s }}
+          </span>
+        }
+      </div>
+    }
+
+    <hr class="my-3">
+    <p class="mb-0" style="font-size: 12px; color: var(--bs-secondary-color)">
+      @if (selectedIngredients.length > 0) {
+        <strong>{{ selectedIngredients.length }} ingredient{{ selectedIngredients.length === 1 ? 'e' : 'i' }}</strong>
+        selezionat{{ selectedIngredients.length === 1 ? 'o' : 'i' }}.
+      } @else {
+        Seleziona gli ingredienti dalla barra laterale.
+      }
+    </p>
+  </main>
+
+</div>

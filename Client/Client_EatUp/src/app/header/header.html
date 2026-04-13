@@ -3,7 +3,7 @@
 
     
     <a class="navbar-brand fw-bold" href="#"
-    (click)="onClickSelectFeature('home')">
+    routerLink="/home">
       🍽️ EatUp
     </a>
 
@@ -26,7 +26,7 @@
             class="nav-link"
             [class.active]="active == 'ingredients-recipes'"
             href="#"
-            (click)="onClickSelectFeature('ingredients-recipes')">
+            routerLink="/ingredients-recipes">
             📖 Ingredienti-Ricette
           </a>
         </li>
@@ -36,14 +36,13 @@
             class="nav-link"
             [class.active]="active == 'week-program'"
             href="#"
-            (click)="onClickSelectFeature('week-program')">
+            routerLink="/week-program">
             🛒 Organizzazione settimanale
           </a>
         </li>
 
       </ul>
 
-      
       <ul class="navbar-nav ms-auto">
 
         <li class="nav-item">
@@ -51,7 +50,7 @@
             class="btn btn-outline-light me-2"
             href="#"
             [class.active]="active == 'login'"
-            (click)="onClickSelectFeature('login')">
+            routerLink="/login">
             Login
           </a>
         </li>
@@ -61,7 +60,7 @@
             class="btn btn-outline-secondary"
             href="#"
             [class.active]="active == 'registation'"
-            (click)="onClickSelectFeature('registration')">
+            routerLink="/registration">
             Registrati
           </a>
         </li>

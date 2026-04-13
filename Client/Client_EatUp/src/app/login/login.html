@@ -21,39 +21,29 @@
             <p class="text-muted">Accedi al tuo account</p>
           </div>
 
-          <form (submit)="onLogin(); $event.preventDefault()">
+          <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
 
             <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="email" placeholder="Email">
+              <input type="email" class="form-control" id="email" placeholder="Email" ngModel name="email" required>
               <label for="email">Email</label>
             </div>
 
             <div class="form-floating mb-3">
-              <input type="password" class="form-control" id="password" placeholder="Password">
+              <input type="password" class="form-control" id="password" placeholder="Password" ngModel name="password"
+                required>
               <label for="password">Password</label>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <div>
-                <input type="checkbox" id="remember">
-                <label for="remember" class="ms-1 small">Ricordami</label>
-              </div>
-              <a href="#" class="small text-decoration-none">Password dimenticata?</a>
             </div>
 
             <button type="submit" class="btn btn-dark w-100 mb-3">
               Accedi
             </button>
 
-            <div class="text-center">
-              <span class="small text-muted">Non hai un account?</span>
-              <a href="#" class="small fw-bold text-decoration-none ms-1"
-              (click)="goToRegister()">
-                Registrati
-              </a>
-            </div>
-
           </form>
+          @if (lblErrore) {
+          <div class="text-danger text-center mb-2">
+            Credenziali non valide
+          </div>
+          }
 
         </div>
 
