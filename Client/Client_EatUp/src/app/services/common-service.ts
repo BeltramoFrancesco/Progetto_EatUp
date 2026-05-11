@@ -36,4 +36,8 @@ export class CommonService {
   generateWeekProgram(preferences: any): Observable<any> {
     return this.dataStorageServices.inviaRichiesta('POST', '/generateWeekProgram', preferences)!;
   }
+
+  generateRecipesFromIngredients(ingredients: string[]): Observable<any> {
+    return this.dataStorageServices.inviaRichiesta('POST', '/generateRecipesFromIngredients', { ingredients })!;
+  }
 }

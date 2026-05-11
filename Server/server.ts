@@ -13,7 +13,7 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import path from "path";
 import cookieParser from "cookie-parser"
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 
 //b. callback
 const app: express.Express = express();
@@ -228,63 +228,49 @@ app.post('/api/generateWeekProgram', async function (req: any, res: any) {
         return res.status(400).send("Le calorie sono obbligatorie");
     }
 
-    if (!process.env.OPENAI_API_KEY) {
-        return res.status(500).send("OPENAI_API_KEY non configurata nel file .env");
+    if (!process.env.GOOGLE_CLOUD_PROJECT) {
+        return res.status(500).send("GOOGLE_CLOUD_PROJECT non configurato nel file .env");
     }
 
-    const openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY
-    });
+    const vertexAI = createVertexAIClient();
 
     try {
-        const response = await openai.responses.create({
-            model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-            input: [
-                {
-                    role: "system",
-                    content: "Sei un nutrizionista digitale per EatUp. Genera solo programmi alimentari realistici e vari, senza diagnosi mediche."
-                },
-                {
-                    role: "user",
-                    content: JSON.stringify({
-                        richiesta: "Crea un programma alimentare settimanale in JSON per 7 giorni con colazione, pranzo, merenda e cena.",
-                        vincoli: {
-                            calorieGiornaliere: calorie,
-                            proteineGrammi: req.body?.proteine ?? null,
-                            carboidratiGrammi: req.body?.carboidrati ?? null,
-                            grassiGrammi: req.body?.grassi ?? null,
-                            fibreGrammi: req.body?.fibre ?? null,
-                            preferenze: req.body?.preferenze ?? "",
-                            intolleranze: req.body?.intolleranze ?? ""
-                        }
-                    })
+        const response = await vertexAI.models.generateContent({
+            model: process.env.VERTEX_AI_MODEL || "gemini-2.5-flash",
+            contents: JSON.stringify({
+                richiesta: "Crea un programma alimentare settimanale in JSON per 7 giorni con colazione, pranzo, merenda e cena.",
+                vincoli: {
+                    calorieGiornaliere: calorie,
+                    proteineGrammi: req.body?.proteine ?? null,
+                    carboidratiGrammi: req.body?.carboidrati ?? null,
+                    grassiGrammi: req.body?.grassi ?? null,
+                    fibreGrammi: req.body?.fibre ?? null,
+                    preferenze: req.body?.preferenze ?? "",
+                    intolleranze: req.body?.intolleranze ?? ""
                 }
-            ],
-            text: {
-                format: {
-                    type: "json_schema",
-                    name: "week_program",
-                    strict: true,
-                    schema: {
-                        type: "object",
-                        additionalProperties: false,
-                        required: ["days"],
-                        properties: {
-                            days: {
-                                type: "array",
-                                minItems: 7,
-                                maxItems: 7,
-                                items: {
-                                    type: "object",
-                                    additionalProperties: false,
-                                    required: ["giorno", "colazione", "pranzo", "merenda", "cena"],
-                                    properties: {
-                                        giorno: { type: "string" },
-                                        colazione: { type: "string" },
-                                        pranzo: { type: "string" },
-                                        merenda: { type: "string" },
-                                        cena: { type: "string" }
-                                    }
+            }),
+            config: {
+                systemInstruction: "Sei un nutrizionista digitale per EatUp. Genera solo programmi alimentari realistici e vari, senza diagnosi mediche.",
+                responseMimeType: "application/json",
+                responseJsonSchema: {
+                    type: "object",
+                    additionalProperties: false,
+                    required: ["days"],
+                    properties: {
+                        days: {
+                            type: "array",
+                            minItems: 7,
+                            maxItems: 7,
+                            items: {
+                                type: "object",
+                                additionalProperties: false,
+                                required: ["giorno", "colazione", "pranzo", "merenda", "cena"],
+                                properties: {
+                                    giorno: { type: "string" },
+                                    colazione: { type: "string" },
+                                    pranzo: { type: "string" },
+                                    merenda: { type: "string" },
+                                    cena: { type: "string" }
                                 }
                             }
                         }
@@ -293,8 +279,7 @@ app.post('/api/generateWeekProgram', async function (req: any, res: any) {
             }
         });
 
-        const generatedText = response.output_text;
-        const weekProgram = JSON.parse(generatedText);
+        const weekProgram = parseVertexJson(response.text);
 
         return res.send(weekProgram);
     } catch (err: any) {
@@ -302,6 +287,117 @@ app.post('/api/generateWeekProgram', async function (req: any, res: any) {
         return res.status(500).send("Errore durante la generazione del programma settimanale");
     }
 });
+
+app.post('/api/generateRecipesFromIngredients', async function (req: any, res: any) {
+    const ingredients = Array.isArray(req.body?.ingredients)
+        ? req.body.ingredients.map((ingredient: any) => String(ingredient).trim()).filter((ingredient: string) => ingredient.length > 0)
+        : [];
+
+    if (ingredients.length === 0) {
+        return res.status(400).send("Seleziona almeno un ingrediente");
+    }
+
+    if (!process.env.GOOGLE_CLOUD_PROJECT) {
+        return res.status(500).send("GOOGLE_CLOUD_PROJECT non configurato nel file .env");
+    }
+
+    const vertexAI = createVertexAIClient();
+
+    try {
+        const response = await vertexAI.models.generateContent({
+            model: process.env.VERTEX_AI_MODEL || "gemini-2.5-flash",
+            contents: JSON.stringify({
+                richiesta: "Genera ricette divise in tre gruppi: solo ingredienti selezionati, ricette con 2 o 3 ingredienti extra, ricette con piu ingredienti da comprare ma molto valide.",
+                ingredientiSelezionati: ingredients,
+                regole: [
+                    "Ogni ricetta deve avere qualita da 0 a 5, immagine, ingredienti e descrizione.",
+                    "Il campo immagine deve essere un URL fotografico costruito con https://loremflickr.com/900/620/ seguito da 2 o 3 keyword inglesi separate da virgola, coerenti con la ricetta.",
+                    "Le ricette del gruppo soloSelezionati devono usare solo gli ingredienti selezionati piu acqua, sale, pepe, olio o spezie base.",
+                    "Le ricette del gruppo pochiExtra devono indicare 2 o 3 ingredienti extra.",
+                    "Le ricette del gruppo daComprare possono indicare piu ingredienti extra, ma devono spiegare perche vale la pena."
+                ]
+            }),
+            config: {
+                systemInstruction: "Sei lo chef digitale di EatUp. Suggerisci ricette realistiche in italiano, valorizzando gli ingredienti gia disponibili e limitando gli sprechi.",
+                responseMimeType: "application/json",
+                responseJsonSchema: {
+                    type: "object",
+                    additionalProperties: false,
+                    required: ["soloSelezionati", "pochiExtra", "daComprare"],
+                    properties: {
+                        soloSelezionati: {
+                            type: "array",
+                            minItems: 1,
+                            maxItems: 4,
+                            items: recipeSchema()
+                        },
+                        pochiExtra: {
+                            type: "array",
+                            minItems: 1,
+                            maxItems: 4,
+                            items: recipeSchema()
+                        },
+                        daComprare: {
+                            type: "array",
+                            minItems: 1,
+                            maxItems: 4,
+                            items: recipeSchema()
+                        }
+                    }
+                }
+            }
+        });
+
+        const recipes = parseVertexJson(response.text);
+        return res.send(recipes);
+    } catch (err: any) {
+        console.log("Errore generazione ricette", err);
+        return res.status(500).send("Errore durante la generazione delle ricette");
+    }
+});
+
+function createVertexAIClient() {
+    const project = process.env.GOOGLE_CLOUD_PROJECT;
+    if (!project) {
+        throw new Error("GOOGLE_CLOUD_PROJECT non configurato");
+    }
+
+    return new GoogleGenAI({
+        vertexai: true,
+        project,
+        location: process.env.GOOGLE_CLOUD_LOCATION || "global"
+    });
+}
+
+function parseVertexJson(text: string | undefined) {
+    if (!text) {
+        throw new Error("Vertex AI non ha restituito testo");
+    }
+    return JSON.parse(text);
+}
+
+function recipeSchema() {
+    return {
+        type: "object",
+        additionalProperties: false,
+        required: ["titolo", "qualita", "immagine", "ingredienti", "ingredientiExtra", "descrizione"],
+        properties: {
+            titolo: { type: "string" },
+            qualita: { type: "number", minimum: 0, maximum: 5 },
+            immagine: { type: "string" },
+            ingredienti: {
+                type: "array",
+                minItems: 1,
+                items: { type: "string" }
+            },
+            ingredientiExtra: {
+                type: "array",
+                items: { type: "string" }
+            },
+            descrizione: { type: "string" }
+        }
+    };
+}
 
 function createToken(data: any) {
     //tempo di creazione del token in secondi
