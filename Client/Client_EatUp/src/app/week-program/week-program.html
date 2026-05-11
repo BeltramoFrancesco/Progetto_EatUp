@@ -1,1 +1,125 @@
-<p>week-program works!</p>
+<section class="week-program-page">
+  @if (!isLoggedIn) {
+    <div class="login-required">
+      <div class="login-panel">
+        <span class="eyebrow">Accesso richiesto</span>
+        <h1>Devi effettuare il login per usare il programma settimanale</h1>
+        <p>
+          Questa funzionalita genera un calendario alimentare personale, quindi serve prima
+          accedere al tuo account EatUp.
+        </p>
+        <a class="primary-action" routerLink="/login">Vai al login</a>
+      </div>
+    </div>
+  } @else {
+    <div class="week-layout">
+      <aside class="preferences-panel">
+        <span class="eyebrow">AI meal planner</span>
+        <h1>Programma settimanale</h1>
+        <p class="intro">
+          Inserisci gli obiettivi nutrizionali. Le calorie sono obbligatorie, gli altri
+          valori aiutano l'AI a creare pasti piu precisi.
+        </p>
+
+        <form #weekForm="ngForm" (ngSubmit)="onSubmit(weekForm)" novalidate>
+          <div class="field">
+            <label for="calorie">Calorie giornaliere *</label>
+            <input
+              id="calorie"
+              name="calorie"
+              type="number"
+              min="1"
+              class="form-control"
+              placeholder="Es. 2200"
+              required
+              [(ngModel)]="calorie">
+            @if (weekForm.submitted && (!calorie || calorie <= 0)) {
+              <small>Le calorie sono obbligatorie.</small>
+            }
+          </div>
+
+          <div class="macro-grid">
+            <div class="field">
+              <label for="proteine">Proteine (g)</label>
+              <input id="proteine" name="proteine" type="number" min="0" class="form-control" [(ngModel)]="proteine">
+            </div>
+
+            <div class="field">
+              <label for="carboidrati">Carboidrati (g)</label>
+              <input id="carboidrati" name="carboidrati" type="number" min="0" class="form-control" [(ngModel)]="carboidrati">
+            </div>
+
+            <div class="field">
+              <label for="grassi">Grassi (g)</label>
+              <input id="grassi" name="grassi" type="number" min="0" class="form-control" [(ngModel)]="grassi">
+            </div>
+
+            <div class="field">
+              <label for="fibre">Fibre (g)</label>
+              <input id="fibre" name="fibre" type="number" min="0" class="form-control" [(ngModel)]="fibre">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="preferenze">Preferenze alimentari</label>
+            <textarea
+              id="preferenze"
+              name="preferenze"
+              rows="3"
+              class="form-control"
+              placeholder="Es. mediterranea, vegetariana, pasti veloci"
+              [(ngModel)]="preferenze"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="intolleranze">Intolleranze o ingredienti da evitare</label>
+            <textarea
+              id="intolleranze"
+              name="intolleranze"
+              rows="3"
+              class="form-control"
+              placeholder="Es. lattosio, frutta secca, glutine"
+              [(ngModel)]="intolleranze"></textarea>
+          </div>
+
+          <button class="primary-action submit-action" type="submit" [disabled]="isLoading">
+            {{ isLoading ? 'Generazione in corso...' : 'Genera programma' }}
+          </button>
+
+          @if (errorMessage) {
+            <div class="error-message">{{ errorMessage }}</div>
+          }
+        </form>
+      </aside>
+
+      <main class="calendar-panel">
+        <div class="calendar-header">
+          <div>
+            <span class="eyebrow">Calendario</span>
+            <h2>Colazione, pranzo, merenda e cena</h2>
+          </div>
+        </div>
+
+        @if (weekProgram.length === 0) {
+          <div class="empty-calendar">
+            Compila il form e invia la richiesta per vedere qui il programma generato dall'AI.
+          </div>
+        } @else {
+          <div class="calendar-grid">
+            @for (day of weekProgram; track day.giorno) {
+              <article class="day-card">
+                <h3>{{ day.giorno }}</h3>
+                @for (meal of meals; track meal.key) {
+                  <div class="meal-row">
+                    <span>{{ meal.label }}</span>
+                    <p>{{ day[meal.key] || 'Non indicato' }}</p>
+                  </div>
+                }
+              </article>
+            }
+          </div>
+        }
+      </main>
+    </div>
+  }
+</section>

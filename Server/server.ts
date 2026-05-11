@@ -142,6 +142,62 @@ app.post('/api/login', async function (req, res, next) {
     });
 });
 
+// Registrazione
+app.post('/api/register', async function (req, res) {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    const client = new MongoClient(connectionString!);
+
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection("users");
+
+        const dbUser = await collection.findOne({ username: username });
+
+        if (dbUser) {
+            return res.status(401).send("Username già esistente");
+        }
+
+        const newUser = {
+            username: username,
+            password: bcrypt.hashSync(password, 10)
+        };
+
+        const result = await collection.insertOne(newUser);
+
+        return res.send({ _id: result.insertedId });
+
+    } catch (err) {
+        return res.status(500).send("Errore server: " + err);
+    } finally {
+        await client.close();
+    }
+});
+
+// nome della collezione passato come risorsa
+app.get('/api/getIngredients', async function (req: any, res: any) {
+    const currentCollection: string = "ingredienti"
+
+    const client = new MongoClient(connectionString!);
+    await client.connect().catch((err: any) => {
+        res.status(503).send("Errore di connessione al database");
+        return;
+    });
+    const collection = client.db(dbName).collection(currentCollection);
+    const cmd = collection.find({}).toArray();
+    cmd.then(function (data: any) {
+        res.send(data);
+    });
+    cmd.catch(function (err: any) {
+        res.status(500).send("Errore lettura collezioni" + err);
+    });
+    cmd.finally(function () {
+        client.close();
+    });
+});
+
 //2. controllo token
 //controllo su tutte le richieste che iniziano per /api se il token è valido
 app.use("/api", function (req:any, res, next) {
@@ -199,27 +255,7 @@ app.get('/api/getCollections', async function (req, res, next) {
     });
 });
 
-// nome della collezione passato come risorsa
-app.get('/api/getIngredients', async function (req: any, res: any) {
-    const currentCollection: string = "ingredienti"
 
-    const client = new MongoClient(connectionString!);
-    await client.connect().catch((err: any) => {
-        res.status(503).send("Errore di connessione al database");
-        return;
-    });
-    const collection = client.db(dbName).collection(currentCollection);
-    const cmd = collection.find({}).toArray();
-    cmd.then(function (data: any) {
-        res.send(data);
-    });
-    cmd.catch(function (err: any) {
-        res.status(500).send("Errore lettura collezioni" + err);
-    });
-    cmd.finally(function () {
-        client.close();
-    });
-});
 
 //f. default root
 app.use(function (req, res, next) {

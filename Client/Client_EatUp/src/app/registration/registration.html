@@ -1,1 +1,61 @@
-<p>registrazione</p>
+<div class="registration-page">
+
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+
+      <!-- SINISTRA (branding) -->
+      <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-center align-items-center left-side text-white">
+        <h1 class="display-3 fw-bold mb-3">🍽️ EatUp</h1>
+        <p class="lead text-center w-75">
+          Organizza le tue ricette e pianifica la settimana in modo semplice e veloce.
+        </p>
+      </div>
+
+      <!-- DESTRA (registrazione) -->
+      <div class="col-lg-6 d-flex justify-content-center align-items-center right-side">
+
+        <div class="registration-card shadow-lg">
+
+          <div class="mb-4 text-center">
+            <h2 class="fw-bold">Unisciti a noi! 👋</h2>
+            <p class="text-muted">Crea il tuo account</p>
+          </div>
+
+          <form #registrationForm="ngForm" (ngSubmit)="onRegister(registrationForm)">
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="name" placeholder="Nome" ngModel name="name" required>
+              <label for="name">Nome</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="email" placeholder="Email" ngModel name="email" required>
+              <label for="email">Email</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="password" placeholder="Password" ngModel name="password"
+                required>
+              <label for="password">Password</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Conferma Password" ngModel name="confirmPassword"
+                required>
+              <label for="confirmPassword">Conferma Password</label>
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100 mb-3">
+              Registrati
+            </button>
+
+          </form>
+          @if (lblErrore) {
+          <div class="text-danger text-center mb-2">
+            Errore nella registrazione
+          </div>
+          }
+
+        </div>
+
+      </div>

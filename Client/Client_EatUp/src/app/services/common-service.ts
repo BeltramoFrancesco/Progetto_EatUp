@@ -8,10 +8,21 @@ import { DataStorageService } from './data-storage-services';
 export class CommonService {
   private dataStorageServices: DataStorageService = inject(DataStorageService);
   public ingredients:any = {}
+  public currentUserEmail: string | null = null;
 
-  
+  get currentUserName(): string {
+    if (!this.currentUserEmail) {
+      return '';
+    }
+    return this.currentUserEmail.split('@')[0];
+  }
+
   doLogin(user:any):Observable<object>{
     return this.dataStorageServices.inviaRichiesta("POST", "/login", user)!;
+  }
+
+  doRegister(user:any):Observable<object>{
+    return this.dataStorageServices.inviaRichiesta("POST", "/register", user)!;
   }
 
   getIngredients(): Observable<any> {
@@ -20,5 +31,9 @@ export class CommonService {
         this.ingredients = data;
       }));
     return obs;
+  }
+
+  generateWeekProgram(preferences: any): Observable<any> {
+    return this.dataStorageServices.inviaRichiesta('POST', '/generateWeekProgram', preferences)!;
   }
 }

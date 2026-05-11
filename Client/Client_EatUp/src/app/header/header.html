@@ -45,7 +45,7 @@
 
       <ul class="navbar-nav ms-auto">
 
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!isLoggedIn">
           <a 
             class="btn btn-outline-light me-2"
             href="#"
@@ -55,7 +55,7 @@
           </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!isLoggedIn">
           <a 
             class="btn btn-outline-secondary"
             href="#"
@@ -63,6 +63,12 @@
             routerLink="/registration">
             Registrati
           </a>
+        </li>
+
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <span class="navbar-text text-white">
+            Bentornato, {{ userName }}
+          </span>
         </li>
 
       </ul>
