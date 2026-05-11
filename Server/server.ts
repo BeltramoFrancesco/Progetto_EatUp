@@ -13,6 +13,7 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import path from "path";
 import cookieParser from "cookie-parser"
+import OpenAI from "openai";
 
 //b. callback
 const app: express.Express = express();
@@ -219,6 +220,88 @@ app.use("/api", function (req:any, res, next) {
 
     }
 })
+
+app.post('/api/generateWeekProgram', async function (req: any, res: any) {
+    const calorie = Number(req.body?.calorie);
+
+    if (!calorie || calorie <= 0) {
+        return res.status(400).send("Le calorie sono obbligatorie");
+    }
+
+    if (!process.env.OPENAI_API_KEY) {
+        return res.status(500).send("OPENAI_API_KEY non configurata nel file .env");
+    }
+
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY
+    });
+
+    try {
+        const response = await openai.responses.create({
+            model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+            input: [
+                {
+                    role: "system",
+                    content: "Sei un nutrizionista digitale per EatUp. Genera solo programmi alimentari realistici e vari, senza diagnosi mediche."
+                },
+                {
+                    role: "user",
+                    content: JSON.stringify({
+                        richiesta: "Crea un programma alimentare settimanale in JSON per 7 giorni con colazione, pranzo, merenda e cena.",
+                        vincoli: {
+                            calorieGiornaliere: calorie,
+                            proteineGrammi: req.body?.proteine ?? null,
+                            carboidratiGrammi: req.body?.carboidrati ?? null,
+                            grassiGrammi: req.body?.grassi ?? null,
+                            fibreGrammi: req.body?.fibre ?? null,
+                            preferenze: req.body?.preferenze ?? "",
+                            intolleranze: req.body?.intolleranze ?? ""
+                        }
+                    })
+                }
+            ],
+            text: {
+                format: {
+                    type: "json_schema",
+                    name: "week_program",
+                    strict: true,
+                    schema: {
+                        type: "object",
+                        additionalProperties: false,
+                        required: ["days"],
+                        properties: {
+                            days: {
+                                type: "array",
+                                minItems: 7,
+                                maxItems: 7,
+                                items: {
+                                    type: "object",
+                                    additionalProperties: false,
+                                    required: ["giorno", "colazione", "pranzo", "merenda", "cena"],
+                                    properties: {
+                                        giorno: { type: "string" },
+                                        colazione: { type: "string" },
+                                        pranzo: { type: "string" },
+                                        merenda: { type: "string" },
+                                        cena: { type: "string" }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const generatedText = response.output_text;
+        const weekProgram = JSON.parse(generatedText);
+
+        return res.send(weekProgram);
+    } catch (err: any) {
+        console.log("Errore generazione programma settimanale", err);
+        return res.status(500).send("Errore durante la generazione del programma settimanale");
+    }
+});
 
 function createToken(data: any) {
     //tempo di creazione del token in secondi
