@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonService } from '../services/common-service';
@@ -7,6 +7,7 @@ type MealKey = 'colazione' | 'pranzo' | 'merenda' | 'cena';
 
 interface WeekDayProgram {
   giorno: string;
+  date?: string;
   colazione?: string;
   pranzo?: string;
   merenda?: string;
@@ -19,7 +20,7 @@ interface WeekDayProgram {
   templateUrl: './week-program.html',
   styleUrl: './week-program.css',
 })
-export class WeekProgram {
+export class WeekProgram implements OnInit {
   private commonService = inject(CommonService);
 
   calorie: number | null = null;
@@ -31,8 +32,11 @@ export class WeekProgram {
   intolleranze = '';
 
   isLoading = false;
+  isLoadingSavedProgram = false;
   errorMessage = '';
   weekProgram: WeekDayProgram[] = [];
+  startDate = '';
+  endDate = '';
 
   readonly meals: { key: MealKey; label: string }[] = [
     { key: 'colazione', label: 'Colazione' },
@@ -43,6 +47,38 @@ export class WeekProgram {
 
   get isLoggedIn(): boolean {
     return !!this.commonService.currentUserEmail;
+  }
+
+  get todayProgram(): WeekDayProgram | undefined {
+    return this.weekProgram.find((day) => day.date === this.todayIsoDate());
+  }
+
+  get hasWeekProgram(): boolean {
+    return this.weekProgram.length > 0;
+  }
+
+  ngOnInit(): void {
+    if (!this.isLoggedIn) {
+      return;
+    }
+
+    this.loadSavedWeekProgram();
+  }
+
+  loadSavedWeekProgram(): void {
+    this.isLoadingSavedProgram = true;
+
+    this.commonService.getWeekProgram().subscribe({
+      next: (data: any) => {
+        this.applyWeekProgram(data);
+        this.populatePreferences(data?.preferences);
+        this.isLoadingSavedProgram = false;
+      },
+      error: (err: any) => {
+        console.error('Failed to load saved week program', err);
+        this.isLoadingSavedProgram = false;
+      },
+    });
   }
 
   onSubmit(form: NgForm): void {
@@ -78,7 +114,7 @@ export class WeekProgram {
 
     this.commonService.generateWeekProgram(payload).subscribe({
       next: (data: any) => {
-        this.weekProgram = this.normalizeProgram(data);
+        this.applyWeekProgram(data);
         this.isLoading = false;
 
         if (this.weekProgram.length === 0) {
@@ -91,6 +127,13 @@ export class WeekProgram {
         this.isLoading = false;
       },
     });
+  }
+
+  private applyWeekProgram(data: any): void {
+    const parsedData = typeof data === 'string' ? this.parseJson(data) : data;
+    this.weekProgram = this.normalizeProgram(parsedData);
+    this.startDate = parsedData?.startDate ?? this.weekProgram[0]?.date ?? '';
+    this.endDate = parsedData?.endDate ?? this.weekProgram[this.weekProgram.length - 1]?.date ?? '';
   }
 
   private normalizeProgram(data: any): WeekDayProgram[] {
@@ -108,6 +151,7 @@ export class WeekProgram {
 
     return source.map((day: any, index: number) => ({
       giorno: day?.giorno ?? day?.day ?? this.defaultDayName(index),
+      date: day?.date ?? day?.data ?? '',
       colazione: this.mealText(day?.colazione ?? day?.breakfast),
       pranzo: this.mealText(day?.pranzo ?? day?.lunch),
       merenda: this.mealText(day?.merenda ?? day?.snack),
@@ -142,5 +186,27 @@ export class WeekProgram {
 
   private defaultDayName(index: number): string {
     return ['Lunedi', 'Martedi', 'Mercoledi', 'Giovedi', 'Venerdi', 'Sabato', 'Domenica'][index] ?? `Giorno ${index + 1}`;
+  }
+
+  private populatePreferences(preferences: any): void {
+    if (!preferences) {
+      return;
+    }
+
+    this.calorie = preferences.calorie ?? this.calorie;
+    this.proteine = preferences.proteine ?? this.proteine;
+    this.carboidrati = preferences.carboidrati ?? this.carboidrati;
+    this.grassi = preferences.grassi ?? this.grassi;
+    this.fibre = preferences.fibre ?? this.fibre;
+    this.preferenze = preferences.preferenze ?? this.preferenze;
+    this.intolleranze = preferences.intolleranze ?? this.intolleranze;
+  }
+
+  private todayIsoDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }

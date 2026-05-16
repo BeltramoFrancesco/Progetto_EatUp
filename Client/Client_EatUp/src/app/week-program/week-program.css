@@ -1,8 +1,6 @@
 .week-program-page {
   min-height: calc(100vh - 56px);
-  background:
-    radial-gradient(900px 360px at 5% 0%, rgba(249, 115, 22, 0.14), transparent),
-    linear-gradient(180deg, #fff7ed 0%, #f8fafc 42%, #eef2f7 100%);
+  background: linear-gradient(180deg, #fff7ed 0%, #f8fafc 42%, #eef2f7 100%);
   color: #1f2937;
   padding: 34px 24px;
 }
@@ -76,7 +74,6 @@
   min-height: 44px;
   padding: 11px 20px;
   text-decoration: none;
-  transition: background 0.18s ease, transform 0.18s ease;
 }
 
 .primary-action:hover {
@@ -177,6 +174,12 @@ textarea.form-control {
   margin-top: 6px;
 }
 
+.calendar-range {
+  color: #64748b;
+  font-weight: 700;
+  margin: 7px 0 0;
+}
+
 .empty-calendar {
   align-items: center;
   border: 1px dashed #cbd5e1;
@@ -186,6 +189,51 @@ textarea.form-control {
   justify-content: center;
   padding: 28px;
   text-align: center;
+}
+
+.today-panel {
+  background: #111827;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  padding: 18px;
+}
+
+.today-panel h3 {
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 900;
+  margin: 6px 0 0;
+}
+
+.today-meals {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.today-meal {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.today-meal span {
+  color: #fdba74;
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.today-meal p,
+.muted-panel p {
+  color: #e5e7eb;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0;
 }
 
 .calendar-grid {
@@ -209,6 +257,15 @@ textarea.form-control {
   font-weight: 800;
   margin: 0;
   padding: 13px 15px;
+}
+
+.day-date {
+  background: #fff7ed;
+  border-bottom: 1px solid #fed7aa;
+  color: #9a3412;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 8px 15px;
 }
 
 .meal-row {
@@ -255,6 +312,10 @@ textarea.form-control {
   }
 
   .macro-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .today-meals {
     grid-template-columns: 1fr;
   }
 }

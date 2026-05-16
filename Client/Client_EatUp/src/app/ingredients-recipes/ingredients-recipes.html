@@ -32,11 +32,24 @@
           <strong>{{ selectedIngredients.length }}</strong>
         </div>
 
+        <div class="ingredient-search">
+          <label for="ingredient-search">Cerca ingrediente</label>
+          <input
+            id="ingredient-search"
+            type="search"
+            name="ingredient-search"
+            autocomplete="off"
+            placeholder="Es. pasta, pomodoro, uova"
+            [(ngModel)]="ingredientSearch">
+        </div>
+
         @if (isLoadingIngredients) {
           <div class="loading-block">Caricamento ingredienti...</div>
+        } @else if (!hasIngredientSearchResults) {
+          <div class="no-ingredients">Nessun ingrediente trovato.</div>
         } @else {
           <div class="category-list">
-            @for (c of categories; track c; let ci = $index) {
+            @for (c of filteredCategories; track c; let ci = $index) {
               <div class="category-item">
                 <button
                   class="category-button"
@@ -49,7 +62,7 @@
 
                 @if (c.open) {
                   <div class="ingredient-list">
-                    @for (i of c.ingredienti; track i) {
+                    @for (i of getVisibleIngredients(c); track i) {
                       <label class="ingredient-option" [class.selected]="isSelected(i)">
                         <input type="checkbox" [checked]="isSelected(i)" (change)="toggleIngredient(i)">
                         <span>{{ getIngredientName(i) }}</span>

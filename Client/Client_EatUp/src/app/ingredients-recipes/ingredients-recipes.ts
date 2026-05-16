@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonService } from '../services/common-service';
 
@@ -20,7 +21,7 @@ interface RecipeGroup {
 
 @Component({
   selector: 'app-ingredients-recipes',
-  imports: [RouterLink],
+  imports: [FormsModule, RouterLink],
   templateUrl: './ingredients-recipes.html',
   styleUrls: ['./ingredients-recipes.css'],
 })
@@ -29,6 +30,7 @@ export class IngredientsRecipes implements OnInit {
 
   selectedIngredients: any[] = [];
   categories: any[] = [];
+  ingredientSearch = '';
   recipeGroups: RecipeGroup[] = this.emptyRecipeGroups();
 
   isLoadingIngredients = false;
@@ -42,6 +44,20 @@ export class IngredientsRecipes implements OnInit {
 
   get selectedIngredientNames(): string[] {
     return this.selectedIngredients.map((ingredient) => this.getIngredientName(ingredient));
+  }
+
+  get filteredCategories(): any[] {
+    const query = this.normalizeSearch(this.ingredientSearch);
+
+    if (!query) {
+      return this.categories;
+    }
+
+    return this.categories.filter((category) => this.getVisibleIngredients(category).length > 0);
+  }
+
+  get hasIngredientSearchResults(): boolean {
+    return this.filteredCategories.length > 0;
   }
 
   ngOnInit() {
@@ -123,6 +139,19 @@ export class IngredientsRecipes implements OnInit {
     return ingredient?.nome ?? ingredient?.name ?? String(ingredient);
   }
 
+  getVisibleIngredients(category: any): any[] {
+    const ingredients = category?.ingredienti ?? [];
+    const query = this.normalizeSearch(this.ingredientSearch);
+
+    if (!query) {
+      return ingredients;
+    }
+
+    return ingredients.filter((ingredient: any) =>
+      this.normalizeSearch(this.getIngredientName(ingredient)).includes(query),
+    );
+  }
+
   imageUrl(recipe: GeneratedRecipe): string {
     return recipe.immagine || this.placeholderImage(recipe.titolo);
   }
@@ -189,6 +218,14 @@ export class IngredientsRecipes implements OnInit {
     } catch {
       return {};
     }
+  }
+
+  private normalizeSearch(value: string): string {
+    return value
+      .trim()
+      .toLocaleLowerCase('it-IT')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 
   private placeholderImage(title: string): string {

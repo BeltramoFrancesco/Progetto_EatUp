@@ -460,3 +460,591 @@
         ╵             [32m~~~~~~~[0m
 
 [39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Registration is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:34:
+[37m      12 │ ...s: [RouterOutlet, Header, [32mRegistration[37m, Login, WeekProgram, Ing...
+         ╵                              [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Login is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:48:
+[37m      12 │ ...utlet, Header, Registration, [32mLogin[37m, WeekProgram, IngredientsRec...
+         ╵                                 [32m~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: WeekProgram is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:55:
+[37m      12 │ ...ader, Registration, Login, [32mWeekProgram[37m, IngredientsRecipes, Home],
+         ╵                               [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: IngredientsRecipes is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:68:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, [32mIngredientsRecipes[37m, Home],
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Home is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:12:88:
+[37m      12 │ ...ader, Registration, Login, WeekProgram, IngredientsRecipes, [32mHome[37m],
+         ╵                                                                [32m~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgClass is not used within the template of Header[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/header/header.ts:8:12:
+[37m      8 │   imports: [[32mNgClass[37m, NgIf, RouterLink],
+        ╵             [32m~~~~~~~[0m
+
+[39m[22m

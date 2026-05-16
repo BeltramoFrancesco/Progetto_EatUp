@@ -1,113 +1,66 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <title>EatUp</title>
+<main class="home-page">
+  <section class="hero-section">
+    <div class="hero-content">
+      <span class="eyebrow">Cucina intelligente</span>
+      <h1>EatUp</h1>
+      <p class="hero-subtitle">
+        Organizza ingredienti, ricette e programma settimanale in un unico posto.
+      </p>
+      <p class="hero-copy">
+        Parti da quello che hai in casa, scopri ricette generate con l AI e pianifica
+        la settimana con pasti coerenti con i tuoi obiettivi nutrizionali.
+      </p>
 
-  <!-- Bootstrap 4 -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="home.css">
-</head>
-
-<body>
-
-<!-- HERO SECTION -->
-<section class="hero">
-  <div class="hero-glow-1"></div>
-  <div class="hero-glow-2"></div>
-
-  <div class="container h-100">
-    <div class="row h-100 align-items-center no-gutters"> <!-- FIX g-0 → no-gutters -->
-
-      <div class="col-lg-5 hero-left">
-        <div class="hero-badge">
-          La tua cucina, reinventata
-        </div>
-
-        <h1 class="hero-title">EatUp</h1>
-
-        <p class="hero-subtitle">
-          Cucina intelligente. Zero sprechi.<br>
-          <strong>Tutto sotto controllo.</strong>
-        </p>
-
-        <p class="hero-description">
-          Scopri ricette con quello che hai in casa, organizza i pasti della settimana
-          e genera la lista della spesa automaticamente.
-        </p>
-
-        <div class="hero-actions">
-          <button class="btn btn-primary-orange">Inizia gratis</button>
-          <button class="btn btn-ghost-orange">Scopri di più</button>
-        </div>
-
-        <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-num">12k+</span>
-            <span class="stat-label">Ricette</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">0</span>
-            <span class="stat-label">Sprechi</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">5min</span>
-            <span class="stat-label">Per pianificare</span>
-          </div>
-        </div>
+      <div class="hero-actions">
+        <a class="primary-action" routerLink="/ingredients-recipes">Trova ricette</a>
+        <a class="secondary-action" routerLink="/week-program">Programma settimana</a>
       </div>
 
-      <div class="col-lg-6 offset-lg-1 hero-right">
-        <div class="section-eyebrow">Funzionalità</div>
-        <h2 class="section-title">Tutto ciò di cui hai bisogno</h2>
-
-        <div class="feature-stack">
-          <div class="feature-card">
-            <div class="feature-body">
-              <h3 class="feature-title">Ricette intelligenti</h3>
-              <p class="feature-desc">Trova ricette con ciò che hai già in casa.</p>
-            </div>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-body">
-              <h3 class="feature-title">Spesa ottimizzata</h3>
-              <p class="feature-desc">Lista automatica degli ingredienti.</p>
-            </div>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-body">
-              <h3 class="feature-title">Meal planner</h3>
-              <p class="feature-desc">Organizza i pasti settimanali.</p>
-            </div>
-          </div>
+      <div class="hero-stats">
+        <div>
+          <strong>3</strong>
+          <span>tipi di ricette</span>
+        </div>
+        <div>
+          <strong>7</strong>
+          <span>giorni pianificati</span>
+        </div>
+        <div>
+          <strong>4</strong>
+          <span>pasti al giorno</span>
         </div>
       </div>
-
     </div>
-  </div>
-</section>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <span class="footer-logo-text">EatUp</span>
-    <p class="footer-tagline">Cucina intelligente. Zero sprechi.</p>
-    <p class="footer-copy">&copy; 2026 EatUp</p>
-  </div>
-</footer>
+    @if (todayProgram) {
+      <aside class="today-preview" aria-label="Programma alimentare di oggi">
+        <div class="preview-header">
+          <span>Oggi</span>
+          <strong>{{ todayProgram.giorno }}</strong>
+        </div>
 
-<!-- JS Bootstrap 4 -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        @if (todayProgram.date) {
+          <div class="today-date">{{ todayProgram.date }}</div>
+        }
 
-</body>
-</html>
+        <div class="preview-list">
+          @for (meal of meals; track meal.key) {
+            <div class="meal-item">
+              <span>{{ meal.label }}</span>
+              <strong>{{ todayProgram[meal.key] || 'Non indicato' }}</strong>
+            </div>
+          }
+        </div>
+      </aside>
+    }
+  </section>
+
+  <section class="features-section">
+    @for (feature of features; track feature.title) {
+      <article class="feature-card">
+        <h2>{{ feature.title }}</h2>
+        <p>{{ feature.description }}</p>
+      </article>
+    }
+  </section>
+</main>

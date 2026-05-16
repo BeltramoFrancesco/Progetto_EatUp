@@ -37,7 +37,15 @@ export class CommonService {
     return this.dataStorageServices.inviaRichiesta('POST', '/generateWeekProgram', preferences)!;
   }
 
+  getWeekProgram(): Observable<any> {
+    return this.dataStorageServices.inviaRichiesta('GET', '/weekProgram')!;
+  }
+
   generateRecipesFromIngredients(ingredients: string[]): Observable<any> {
     return this.dataStorageServices.inviaRichiesta('POST', '/generateRecipesFromIngredients', { ingredients })!;
+  }
+
+  loginWithGoogle(googleToken:any){
+    return this.dataStorageServices.inviaRichiesta("POST", "/loginWithGoogle", { googleToken })!
   }
 }

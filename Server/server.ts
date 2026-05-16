@@ -14,6 +14,7 @@ import jwt from "jsonwebtoken"
 import path from "path";
 import cookieParser from "cookie-parser"
 import { GoogleGenAI } from "@google/genai";
+import nodemailer from "nodemailer";
 
 //b. callback
 const app: express.Express = express();
@@ -21,8 +22,9 @@ const app: express.Express = express();
 dotenv.config({ path: './.env' });
 const connectionString = process.env.connectionStringLocal;  //process.env.connectionStringLocal    process.env.connectionStringAtlas
 const dbName = process.env.dbName;
-const PORT = parseInt(process.env.PORT!);
+//const PORT = parseInt(process.env.PORT!);
 const HTTPS_PORT = parseInt(process.env.HTTPS_PORT!);
+const googleOAuth = JSON.parse(process.env.googleOAuth!);
 
 //c. configurazione e avvio del server http
 // const server = http.createServer(app);
@@ -142,6 +144,68 @@ app.post('/api/login', async function (req, res, next) {
         client.close();
     });
 });
+
+app.post('/api/loginWithGoogle', async function (req, res, next) {
+    const googleToken:any = req.body.googleToken;
+    const payloadGoogleToken:any = jwt.decode(googleToken)
+    console.log("Google token", payloadGoogleToken)
+    const client = new MongoClient(connectionString!);
+    await client.connect().catch(function(err){
+        res.status(503).send("Errore di connessione al database");
+        return;
+    });
+    const collection = client.db(dbName).collection("mails");
+    const cmd = collection.findOne({ "username": payloadGoogleToken?.email });
+    cmd.catch(function (err) {
+        res.status(500).send("Errore lettura collezioni" + err);
+        client.close();
+    })
+    cmd.then(function (dbUser) {
+        if (!dbUser) {
+            // se l'utente non esiste lo creo
+            let password = ""
+            for (let i = 0; i < 12; i++) {
+                password += String.fromCharCode(Math.floor(Math.random() * 26) + 65)
+            }
+            const newUser:any = {
+                username: payloadGoogleToken.email,
+                password: bcrypt.hashSync(password, 10), // non serve perchè l'autenticazione avviene tramite google
+                oldPassword: password,
+                mail: []
+            }
+            const cmd2 = collection.insertOne(newUser)
+            cmd2.catch(function(err){
+                res.status(500).send("Errore lettura collezioni" + err);
+            })
+            cmd2.then(function(mongoResponse){
+                newUser._id = mongoResponse.insertedId.toString()
+                sendGmail(payloadGoogleToken.email,password)
+                let TOKEN = createToken(newUser);
+                res.cookie("TOKEN", TOKEN, cookiesOpsions)
+                res.send({username: payloadGoogleToken.email})
+            })
+            cmd2.finally(function(){
+                client.close()
+            })
+        }else{
+            let TOKEN = createToken(dbUser);
+            res.cookie("TOKEN", TOKEN, cookiesOpsions)
+            res.send({username: payloadGoogleToken.email})
+        }
+    });
+});
+
+function sendGmail(email:string,password:string){
+    let message = fs.readFileSync("./message.html", "utf-8")
+    message = message.replace("__user",email)
+    message = message.replace("__password",password)
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: googleOAuth
+    })
+}
+
+
 
 // Registrazione
 app.post('/api/register', async function (req, res) {
@@ -279,12 +343,34 @@ app.post('/api/generateWeekProgram', async function (req: any, res: any) {
             }
         });
 
-        const weekProgram = parseVertexJson(response.text);
+        const generatedProgram = parseVertexJson(response.text);
+        const weekProgram = buildDatedWeekProgram(generatedProgram, req.body);
+        await saveWeekProgram(req.username, weekProgram);
 
         return res.send(weekProgram);
     } catch (err: any) {
         console.log("Errore generazione programma settimanale", err);
         return res.status(500).send("Errore durante la generazione del programma settimanale");
+    }
+});
+
+app.get('/api/weekProgram', async function (req: any, res: any) {
+    const client = new MongoClient(connectionString!);
+
+    try {
+        await client.connect();
+        const collection = client.db(dbName).collection("weekPrograms");
+        const program = await collection.findOne(
+            { username: req.username },
+            { sort: { updatedAt: -1 }, projection: { _id: 0 } }
+        );
+
+        return res.send(program ?? { days: [] });
+    } catch (err: any) {
+        console.log("Errore lettura programma settimanale", err);
+        return res.status(500).send("Errore durante il recupero del programma settimanale");
+    } finally {
+        await client.close();
     }
 });
 
@@ -374,6 +460,73 @@ function parseVertexJson(text: string | undefined) {
         throw new Error("Vertex AI non ha restituito testo");
     }
     return JSON.parse(text);
+}
+
+function buildDatedWeekProgram(generatedProgram: any, preferences: any) {
+    const days = Array.isArray(generatedProgram?.days) ? generatedProgram.days : [];
+    const startDate = todayIsoDate();
+    const datedDays = days.map((day: any, index: number) => ({
+        ...day,
+        date: addDaysIsoDate(startDate, index)
+    }));
+
+    return {
+        startDate,
+        endDate: addDaysIsoDate(startDate, Math.max(datedDays.length - 1, 0)),
+        updatedAt: new Date(),
+        preferences: {
+            calorie: preferences?.calorie ?? null,
+            proteine: preferences?.proteine ?? null,
+            carboidrati: preferences?.carboidrati ?? null,
+            grassi: preferences?.grassi ?? null,
+            fibre: preferences?.fibre ?? null,
+            preferenze: preferences?.preferenze ?? "",
+            intolleranze: preferences?.intolleranze ?? ""
+        },
+        days: datedDays
+    };
+}
+
+async function saveWeekProgram(username: string, weekProgram: any) {
+    const client = new MongoClient(connectionString!);
+
+    try {
+        await client.connect();
+        const collection = client.db(dbName).collection("weekPrograms");
+        await collection.updateOne(
+            { username },
+            {
+                $set: {
+                    ...weekProgram,
+                    username,
+                    updatedAt: new Date()
+                },
+                $setOnInsert: {
+                    createdAt: new Date()
+                }
+            },
+            { upsert: true }
+        );
+    } finally {
+        await client.close();
+    }
+}
+
+function todayIsoDate() {
+    return formatIsoDate(new Date());
+}
+
+function addDaysIsoDate(isoDate: string, daysToAdd: number) {
+    const date = new Date(`${isoDate}T00:00:00`);
+    date.setDate(date.getDate() + daysToAdd);
+    return formatIsoDate(date);
+}
+
+function formatIsoDate(date: Date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
 }
 
 function recipeSchema() {

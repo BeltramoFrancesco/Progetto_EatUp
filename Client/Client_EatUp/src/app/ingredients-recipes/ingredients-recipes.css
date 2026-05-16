@@ -83,7 +83,36 @@
   padding: 5px 10px;
 }
 
-.loading-block { color: #64748b; padding: 16px; }
+.ingredient-search {
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  display: grid;
+  gap: 7px;
+  padding: 14px 16px 16px;
+}
+
+.ingredient-search label {
+  color: #475569;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.ingredient-search input {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #111827;
+  font: inherit;
+  outline: none;
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.ingredient-search input:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, .16);
+}
+
+.loading-block, .no-ingredients { color: #64748b; padding: 16px; }
 .category-item + .category-item { border-top: 1px solid #eef2f7; }
 
 .category-button {

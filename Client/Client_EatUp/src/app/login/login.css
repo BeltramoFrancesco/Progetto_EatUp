@@ -37,3 +37,27 @@
 .btn-dark:hover {
   transform: translateY(-2px);
 }
+
+.login-divider {
+  align-items: center;
+  color: #6c757d;
+  display: flex;
+  font-size: .9rem;
+  gap: 12px;
+  margin: 2px 0 18px;
+}
+
+.login-divider::before,
+.login-divider::after {
+  background: #dee2e6;
+  content: "";
+  flex: 1;
+  height: 1px;
+}
+
+.google-login {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  min-height: 40px;
+}
