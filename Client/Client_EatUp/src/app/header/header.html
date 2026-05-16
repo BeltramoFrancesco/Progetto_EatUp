@@ -2,7 +2,7 @@
   <div class="container">
 
     
-    <a class="navbar-brand fw-bold" href="#"
+    <a class="navbar-brand fw-bold"
     routerLink="/home">
       🍽️ EatUp
     </a>
@@ -24,8 +24,8 @@
         <li class="nav-item">
           <a 
             class="nav-link"
-            [class.active]="active == 'ingredients-recipes'"
-            href="#"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
             routerLink="/ingredients-recipes">
             📖 Ingredienti-Ricette
           </a>
@@ -34,8 +34,8 @@
         <li class="nav-item">
           <a 
             class="nav-link"
-            [class.active]="active == 'week-program'"
-            href="#"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
             routerLink="/week-program">
             🛒 Organizzazione settimanale
           </a>
@@ -48,8 +48,8 @@
         <li class="nav-item" *ngIf="!isLoggedIn">
           <a 
             class="btn btn-outline-light me-2"
-            href="#"
-            [class.active]="active == 'login'"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
             routerLink="/login">
             Login
           </a>
@@ -58,8 +58,8 @@
         <li class="nav-item" *ngIf="!isLoggedIn">
           <a 
             class="btn btn-outline-secondary"
-            href="#"
-            [class.active]="active == 'registation'"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
             routerLink="/registration">
             Registrati
           </a>
