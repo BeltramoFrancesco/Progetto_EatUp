@@ -27,6 +27,7 @@ interface RecipeGroup {
 })
 export class IngredientsRecipes implements OnInit {
   private commonService = inject(CommonService);
+  private readonly foodNotFoundImage = '/foodNotFound.png';
 
   selectedIngredients: any[] = [];
   categories: any[] = [];
@@ -128,7 +129,7 @@ export class IngredientsRecipes implements OnInit {
 
   onRecipeImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
-    target.src = this.placeholderImage('Ricetta EatUp');
+    target.src = this.foodNotFoundImage;
   }
 
   hasRecipes(): boolean {
@@ -153,7 +154,7 @@ export class IngredientsRecipes implements OnInit {
   }
 
   imageUrl(recipe: GeneratedRecipe): string {
-    return recipe.immagine || this.placeholderImage(recipe.titolo);
+    return recipe.immagine || this.foodNotFoundImage;
   }
 
   private normalizeRecipeGroups(data: any): RecipeGroup[] {
@@ -228,7 +229,4 @@ export class IngredientsRecipes implements OnInit {
       .replace(/[\u0300-\u036f]/g, '');
   }
 
-  private placeholderImage(title: string): string {
-    return `https://placehold.co/900x620/f97316/ffffff?text=${encodeURIComponent(title)}`;
-  }
 }

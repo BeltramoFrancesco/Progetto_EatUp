@@ -25,6 +25,8 @@ const dbName = process.env.dbName;
 //const PORT = parseInt(process.env.PORT!);
 const HTTPS_PORT = parseInt(process.env.HTTPS_PORT!);
 const googleOAuth = JSON.parse(process.env.googleOAuth!);
+const FOOD_NOT_FOUND_IMAGE = "/foodNotFound.png";
+const recipeImageCache = new Map<string, string>();
 
 //c. configurazione e avvio del server http
 // const server = http.createServer(app);
@@ -410,18 +412,24 @@ app.post('/api/generateRecipesFromIngredients', async function (req: any, res: a
         const response = await vertexAI.models.generateContent({
             model: process.env.VERTEX_AI_MODEL || "gemini-2.5-flash",
             contents: JSON.stringify({
-                richiesta: "Genera ricette divise in tre gruppi: solo ingredienti selezionati, ricette con 2 o 3 ingredienti extra, ricette con piu ingredienti da comprare ma molto valide.",
+                richiesta: "Genera solo ricette vere, riconoscibili e cucinabili, divise in tre gruppi: solo ingredienti selezionati, ricette con 2 o 3 ingredienti extra, ricette con piu ingredienti da comprare ma molto valide.",
                 ingredientiSelezionati: ingredients,
                 regole: [
-                    "Ogni ricetta deve avere qualita da 0 a 5, immagine, ingredienti e descrizione.",
-                    "Il campo immagine deve essere un URL fotografico costruito con https://loremflickr.com/900/620/ seguito da 2 o 3 keyword inglesi separate da virgola, coerenti con la ricetta.",
+                    "Ogni ricetta deve essere un piatto realmente esistente o una variante comune e credibile della cucina italiana o internazionale.",
+                    "Non inventare nomi fantasiosi, non proporre abbinamenti assurdi e non creare ricette impossibili da preparare.",
+                    "Il titolo deve essere il nome di un piatto vero e riconoscibile, non una frase generica.",
+                    "Ogni ricetta deve avere qualita da 0 a 5, ingredienti, ingredientiExtra, descrizione e imageSearchQuery.",
+                    "imageSearchQuery deve essere una query breve e precisa per cercare una foto reale dello stesso piatto, non di una categoria generica. Se il piatto ha un nome italiano tradizionale, usa quel nome esatto.",
+                    "La descrizione deve spiegare in modo realistico che tipo di piatto e' e perche' funziona con gli ingredienti indicati.",
                     "Le ricette del gruppo soloSelezionati devono usare solo gli ingredienti selezionati piu acqua, sale, pepe, olio o spezie base.",
                     "Le ricette del gruppo pochiExtra devono indicare 2 o 3 ingredienti extra.",
-                    "Le ricette del gruppo daComprare possono indicare piu ingredienti extra, ma devono spiegare perche vale la pena."
+                    "Le ricette del gruppo daComprare possono indicare piu ingredienti extra, ma devono spiegare perche vale la pena.",
+                    "Se per un gruppo non esistono ricette vere e plausibili, restituisci un array vuoto invece di forzare una ricetta inventata."
                 ]
             }),
             config: {
-                systemInstruction: "Sei lo chef digitale di EatUp. Suggerisci ricette realistiche in italiano, valorizzando gli ingredienti gia disponibili e limitando gli sprechi.",
+                temperature: 0.35,
+                systemInstruction: "Sei lo chef digitale di EatUp. Suggerisci solo ricette vere, realistiche e cucinabili in italiano. Privilegia piatti riconoscibili, ingredienti compatibili e preparazioni sensate. Non inventare ricette finte.",
                 responseMimeType: "application/json",
                 responseJsonSchema: {
                     type: "object",
@@ -430,19 +438,19 @@ app.post('/api/generateRecipesFromIngredients', async function (req: any, res: a
                     properties: {
                         soloSelezionati: {
                             type: "array",
-                            minItems: 1,
+                            minItems: 0,
                             maxItems: 4,
                             items: recipeSchema()
                         },
                         pochiExtra: {
                             type: "array",
-                            minItems: 1,
+                            minItems: 0,
                             maxItems: 4,
                             items: recipeSchema()
                         },
                         daComprare: {
                             type: "array",
-                            minItems: 1,
+                            minItems: 0,
                             maxItems: 4,
                             items: recipeSchema()
                         }
@@ -451,7 +459,7 @@ app.post('/api/generateRecipesFromIngredients', async function (req: any, res: a
             }
         });
 
-        const recipes = parseVertexJson(response.text);
+        const recipes = await prepareRecipesForClient(parseVertexJson(response.text));
         return res.send(recipes);
     } catch (err: any) {
         console.log("Errore generazione ricette", err);
@@ -550,11 +558,11 @@ function recipeSchema() {
     return {
         type: "object",
         additionalProperties: false,
-        required: ["titolo", "qualita", "immagine", "ingredienti", "ingredientiExtra", "descrizione"],
+        required: ["titolo", "qualita", "imageSearchQuery", "ingredienti", "ingredientiExtra", "descrizione"],
         properties: {
             titolo: { type: "string" },
             qualita: { type: "number", minimum: 0, maximum: 5 },
-            immagine: { type: "string" },
+            imageSearchQuery: { type: "string" },
             ingredienti: {
                 type: "array",
                 minItems: 1,
@@ -567,6 +575,278 @@ function recipeSchema() {
             descrizione: { type: "string" }
         }
     };
+}
+
+async function prepareRecipesForClient(recipes: any) {
+    const groupKeys = ["soloSelezionati", "pochiExtra", "daComprare"];
+    const result: any = {};
+
+    for (const groupKey of groupKeys) {
+        const groupRecipes = Array.isArray(recipes?.[groupKey]) ? recipes[groupKey] : [];
+        const realisticRecipes = groupRecipes.filter((recipe: any) => isRealisticRecipe(recipe));
+
+        result[groupKey] = await Promise.all(realisticRecipes.map(async (recipe: any) => ({
+                titolo: String(recipe.titolo).trim(),
+                qualita: Math.max(0, Math.min(5, Number(recipe.qualita ?? 0))),
+                immagine: await findRecipeImage(recipe),
+                ingredienti: normalizeStringArray(recipe.ingredienti),
+                ingredientiExtra: normalizeStringArray(recipe.ingredientiExtra),
+                descrizione: String(recipe.descrizione ?? "").trim()
+            })));
+    }
+
+    return result;
+}
+
+function isRealisticRecipe(recipe: any) {
+    const title = String(recipe?.titolo ?? "").trim();
+    const description = String(recipe?.descrizione ?? "").trim();
+    const ingredients = normalizeStringArray(recipe?.ingredienti);
+
+    if (title.length < 4 || description.length < 20 || ingredients.length === 0) {
+        return false;
+    }
+
+    const bannedGenericTitles = [
+        "ricetta consigliata",
+        "ricetta inventata",
+        "piatto creativo",
+        "mix di ingredienti",
+        "fantasia di ingredienti"
+    ];
+
+    return !bannedGenericTitles.some((bannedTitle) => title.toLocaleLowerCase("it-IT").includes(bannedTitle));
+}
+
+async function findRecipeImage(recipe: any) {
+    const queries = buildRecipeImageQueries(recipe);
+
+    if (queries.length === 0) {
+        return FOOD_NOT_FOUND_IMAGE;
+    }
+
+    const cacheKey = queries.join("|");
+
+    if (recipeImageCache.has(cacheKey)) {
+        return recipeImageCache.get(cacheKey)!;
+    }
+
+    let imageUrl: string | null = null;
+
+    for (const query of queries) {
+        imageUrl =
+            await findTheMealDbImage(query) ??
+            await findWikipediaImage(query) ??
+            await findWikimediaCommonsImage(query);
+
+        if (imageUrl) {
+            break;
+        }
+    }
+
+    imageUrl ??= FOOD_NOT_FOUND_IMAGE;
+
+    recipeImageCache.set(cacheKey, imageUrl);
+    return imageUrl;
+}
+
+function buildRecipeImageQueries(recipe: any) {
+    const title = String(recipe?.titolo ?? "").trim();
+    const suggestedQuery = String(recipe?.imageSearchQuery ?? "").trim();
+    const ingredients = normalizeStringArray(recipe?.ingredienti).slice(0, 2).join(" ");
+    const titleTokens = significantTokens(title);
+    const suggestedTokens = significantTokens(suggestedQuery);
+
+    return Array.from(new Set([
+        title,
+        suggestedQuery,
+        titleTokens.join(" "),
+        suggestedTokens.join(" "),
+        titleTokens.slice(-2).join(" "),
+        suggestedTokens.slice(-2).join(" "),
+        ...titleTokens,
+        ...suggestedTokens,
+        [title, ingredients].filter(Boolean).join(" ")
+    ].map((query) => query.trim()).filter((query) => query.length >= 3)));
+}
+
+async function findTheMealDbImage(query: string) {
+    const url = "https://www.themealdb.com/api/json/v1/1/search.php?" + new URLSearchParams({
+        s: query
+    }).toString();
+
+    const data = await fetchJson(url);
+    const meals = Array.isArray(data?.meals) ? data.meals : [];
+
+    return meals
+        .filter((meal: any) => isRelevantImageResult(query, meal?.strMeal, true))
+        .sort((first: any, second: any) => relevanceScore(query, second?.strMeal) - relevanceScore(query, first?.strMeal))
+        .map((meal: any) => meal?.strMealThumb)
+        .find((imageUrl: any) => isUsableImageUrl(imageUrl)) ?? null;
+}
+
+async function findWikipediaImage(query: string) {
+    return await findWikipediaImageInLanguage("it", query) ??
+        await findWikipediaImageInLanguage("en", query);
+}
+
+async function findWikipediaImageInLanguage(language: "it" | "en", query: string) {
+    const exactImage = await findExactWikipediaImage(language, query);
+
+    if (exactImage) {
+        return exactImage;
+    }
+
+    const url = `https://${language}.wikipedia.org/w/api.php?` + new URLSearchParams({
+        action: "query",
+        generator: "search",
+        gsrsearch: query,
+        gsrlimit: "5",
+        prop: "pageimages|info",
+        piprop: "thumbnail|original",
+        pithumbsize: "900",
+        inprop: "url",
+        format: "json",
+        origin: "*"
+    }).toString();
+
+    const data = await fetchJson(url);
+    const pages = Object.values(data?.query?.pages ?? {}) as any[];
+
+    return pages
+        .filter((page: any) => isRelevantImageResult(query, page?.title))
+        .sort((first: any, second: any) => relevanceScore(query, second?.title) - relevanceScore(query, first?.title))
+        .flatMap((page: any) => [page?.original?.source, page?.thumbnail?.source])
+        .find((imageUrl: any) => isUsableImageUrl(imageUrl)) ?? null;
+}
+
+async function findExactWikipediaImage(language: "it" | "en", query: string) {
+    const url = `https://${language}.wikipedia.org/w/api.php?` + new URLSearchParams({
+        action: "query",
+        titles: query,
+        redirects: "1",
+        prop: "pageimages|info",
+        piprop: "thumbnail|original",
+        pithumbsize: "900",
+        inprop: "url",
+        format: "json",
+        origin: "*"
+    }).toString();
+
+    const data = await fetchJson(url);
+    const pages = Object.values(data?.query?.pages ?? {}) as any[];
+    const page = pages.find((item: any) => !item?.missing && isRelevantImageResult(query, item?.title));
+
+    return [page?.original?.source, page?.thumbnail?.source]
+        .find((imageUrl: any) => isUsableImageUrl(imageUrl)) ?? null;
+}
+
+async function findWikimediaCommonsImage(query: string) {
+    const url = "https://commons.wikimedia.org/w/api.php?" + new URLSearchParams({
+        action: "query",
+        generator: "search",
+        gsrnamespace: "6",
+        gsrsearch: query,
+        gsrlimit: "20",
+        prop: "imageinfo",
+        iiprop: "url",
+        iiurlwidth: "900",
+        format: "json",
+        origin: "*"
+    }).toString();
+
+    const data = await fetchJson(url);
+    const pages = Object.values(data?.query?.pages ?? {}) as any[];
+
+    return pages
+        .filter((page: any) => isRelevantImageResult(query, page?.title, true))
+        .sort((first: any, second: any) => relevanceScore(query, second?.title) - relevanceScore(query, first?.title))
+        .map((page: any) => page?.imageinfo?.[0]?.thumburl ?? page?.imageinfo?.[0]?.url)
+        .find((imageUrl: any) => isUsableImageUrl(imageUrl)) ?? null;
+}
+
+async function fetchJson(url: string) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
+
+    try {
+        const response = await fetch(url, {
+            signal: controller.signal,
+            headers: {
+                "User-Agent": "EatUp/1.0 recipe-image-search"
+            }
+        });
+
+        if (!response.ok) {
+            return null;
+        }
+
+        return await response.json();
+    } catch (err: any) {
+        console.log("Ricerca immagine non riuscita", err?.message ?? err);
+        return null;
+    } finally {
+        clearTimeout(timeout);
+    }
+}
+
+function isUsableImageUrl(imageUrl: any) {
+    return typeof imageUrl === "string" &&
+        imageUrl.startsWith("https://") &&
+        /\.(jpg|jpeg|png|webp)(\?|$)/i.test(imageUrl);
+}
+
+function isRelevantImageResult(query: string, resultTitle: any, allowPartialMatch = false) {
+    if (typeof resultTitle !== "string") {
+        return false;
+    }
+
+    const queryTokens = significantTokens(query);
+    const titleTokens = significantTokens(resultTitle.replace(/^file:/i, ""));
+
+    if (queryTokens.length === 0 || titleTokens.length === 0) {
+        return false;
+    }
+
+    const matchedTokens = queryTokens.filter((token) => titleTokens.includes(token));
+    const requiredMatches = allowPartialMatch
+        ? Math.max(1, Math.ceil(queryTokens.length * 0.5))
+        : (queryTokens.length <= 2 ? queryTokens.length : Math.ceil(queryTokens.length * 0.65));
+
+    return matchedTokens.length >= requiredMatches;
+}
+
+function relevanceScore(query: string, resultTitle: any) {
+    if (typeof resultTitle !== "string") {
+        return 0;
+    }
+
+    const queryTokens = significantTokens(query);
+    const titleTokens = significantTokens(resultTitle.replace(/^file:/i, ""));
+    const matchedTokens = queryTokens.filter((token) => titleTokens.includes(token));
+
+    return matchedTokens.length * 10 - Math.max(0, titleTokens.length - matchedTokens.length);
+}
+
+function significantTokens(value: string) {
+    const stopWords = new Set([
+        "con", "alla", "alle", "allo", "all", "della", "delle", "degli", "del", "di", "e", "al", "ai",
+        "the", "and", "with", "food", "dish", "recipe", "recipes", "cooked", "homemade", "plate", "file", "jpg", "jpeg", "png", "webp"
+    ]);
+
+    return value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, " ")
+        .split(/\s+/)
+        .filter((token) => token.length >= 3 && !stopWords.has(token));
+}
+
+function normalizeStringArray(value: any) {
+    return Array.isArray(value)
+        ? value.map((item: any) => String(item).trim()).filter((item: string) => item.length > 0)
+        : [];
 }
 
 function createToken(data: any) {
@@ -626,4 +906,3 @@ app.use('/', function (err: Error, req: express.Request, res: express.Response, 
     res.status(500).send(err.message);
     console.log('****** ERRORE ******\n' + err.stack);
 });
-
