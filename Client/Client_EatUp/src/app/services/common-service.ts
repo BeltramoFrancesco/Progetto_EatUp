@@ -21,6 +21,13 @@ export class CommonService {
     return this.dataStorageServices.inviaRichiesta("POST", "/login", user)!;
   }
 
+  doLogout(): Observable<object> {
+    return this.dataStorageServices.inviaRichiesta('POST', '/logout')!
+      .pipe(tap(() => {
+        this.currentUserEmail = null;
+      }));
+  }
+
   doRegister(user:any):Observable<object>{
     return this.dataStorageServices.inviaRichiesta("POST", "/register", user)!;
   }

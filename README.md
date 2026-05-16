@@ -10,6 +10,7 @@ L'app permette all'utente di partire da cio' che ha gia' in cucina, selezionare 
 - Registrazione con email e password.
 - Login tradizionale con password cifrata tramite bcrypt.
 - Login con Google tramite Google Identity Services.
+- Logout con rimozione del cookie di sessione.
 - Sessione utente tramite JWT salvato in cookie HTTP-only.
 - Lista ingredienti divisa per categorie.
 - Ricerca testuale degli ingredienti.
@@ -171,6 +172,7 @@ npm run build
 - `POST /api/register` registra un nuovo utente.
 - `POST /api/login` effettua il login classico.
 - `POST /api/loginWithGoogle` effettua il login tramite Google.
+- `POST /api/logout` termina la sessione ed elimina il cookie JWT.
 - `GET /api/getIngredients` recupera gli ingredienti.
 - `POST /api/generateRecipesFromIngredients` genera ricette con AI.
 - `POST /api/generateWeekProgram` genera il programma settimanale.
@@ -182,4 +184,3 @@ npm run build
 - Non caricare chiavi private, certificati reali o service account Google.
 - Usa una password per app Google per Nodemailer, non la password normale dell'account.
 - Se qualche segreto e' gia' stato committato in passato, va rimosso dalla history e rigenerato.
-

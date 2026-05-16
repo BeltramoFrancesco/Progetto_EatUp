@@ -249,6 +249,15 @@ app.post('/api/register', async function (req, res) {
     }
 });
 
+app.post("/api/logout", function (req, res, next) {
+    let options = {
+        ...cookiesOpsions,
+        maxAge: -1
+    }
+    res.cookie("TOKEN", "", options)
+    res.send({ ok: 1 })
+})
+
 // nome della collezione passato come risorsa
 app.get('/api/getIngredients', async function (req: any, res: any) {
     const currentCollection: string = "ingredienti"
