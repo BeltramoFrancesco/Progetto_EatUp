@@ -154,7 +154,7 @@ app.post('/api/loginWithGoogle', async function (req, res, next) {
         res.status(503).send("Errore di connessione al database");
         return;
     });
-    const collection = client.db(dbName).collection("mails");
+    const collection = client.db(dbName).collection("users");
     const cmd = collection.findOne({ "username": payloadGoogleToken?.email });
     cmd.catch(function (err) {
         res.status(500).send("Errore lettura collezioni" + err);
@@ -170,8 +170,7 @@ app.post('/api/loginWithGoogle', async function (req, res, next) {
             const newUser:any = {
                 username: payloadGoogleToken.email,
                 password: bcrypt.hashSync(password, 10), // non serve perchè l'autenticazione avviene tramite google
-                oldPassword: password,
-                mail: []
+                oldPassword: password
             }
             const cmd2 = collection.insertOne(newUser)
             cmd2.catch(function(err){
@@ -179,7 +178,9 @@ app.post('/api/loginWithGoogle', async function (req, res, next) {
             })
             cmd2.then(function(mongoResponse){
                 newUser._id = mongoResponse.insertedId.toString()
-                sendGmail(payloadGoogleToken.email,password)
+                sendGmail(payloadGoogleToken.email,password).catch((err: any) => {
+                    console.log("Errore invio email Google login", err);
+                })
                 let TOKEN = createToken(newUser);
                 res.cookie("TOKEN", TOKEN, cookiesOpsions)
                 res.send({username: payloadGoogleToken.email})
@@ -195,13 +196,20 @@ app.post('/api/loginWithGoogle', async function (req, res, next) {
     });
 });
 
-function sendGmail(email:string,password:string){
+async function sendGmail(email:string,password:string){
     let message = fs.readFileSync("./message.html", "utf-8")
     message = message.replace("__user",email)
     message = message.replace("__password",password)
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: googleOAuth
+    })
+
+    await transporter.sendMail({
+        from: `"EatUp" <${googleOAuth.user}>`,
+        to: email,
+        subject: "Benvenuto su EatUp",
+        html: message
     })
 }
 
@@ -609,5 +617,4 @@ app.use('/', function (err: Error, req: express.Request, res: express.Response, 
     res.status(500).send(err.message);
     console.log('****** ERRORE ******\n' + err.stack);
 });
-
 

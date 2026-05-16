@@ -1,0 +1,135 @@
+# =========================
+# Dependencies
+# =========================
+**/node_modules/
+**/jspm_packages/
+**/bower_components/
+
+# =========================
+# Environment and secrets
+# =========================
+**/.env
+**/.env.*
+!**/.env.example
+
+# Private keys, certificates and service accounts
+Server/Keys/*
+Server/keys/*
+!Server/Keys/.gitkeep
+!Server/Keys/README.md
+!Server/keys/.gitkeep
+!Server/keys/README.md
+*.pem
+*.key
+*.p12
+*.pfx
+*service-account*.json
+*credentials*.json
+
+# =========================
+# Logs
+# =========================
+logs/
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+Client/Client_EatUp/ng-serve*.log
+
+# =========================
+# Runtime and process files
+# =========================
+pids/
+*.pid
+*.seed
+*.pid.lock
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# =========================
+# Angular / frontend build
+# =========================
+Client/Client_EatUp/dist/
+Client/Client_EatUp/tmp/
+Client/Client_EatUp/out-tsc/
+Client/Client_EatUp/bazel-out/
+Client/Client_EatUp/.angular/cache/
+Client/Client_EatUp/.sass-cache/
+Client/Client_EatUp/coverage/
+Client/Client_EatUp/typings/
+Client/Client_EatUp/__screenshots__/
+
+# =========================
+# TypeScript / Node build
+# =========================
+Server/dist/
+Server/build/
+Server/out/
+Server/coverage/
+*.tsbuildinfo
+lib-cov/
+.nyc_output/
+
+# =========================
+# Package output and caches
+# =========================
+.npm/
+.pnpm-store/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+*.tgz
+.yarn-integrity
+
+# =========================
+# Tool caches
+# =========================
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+.vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# =========================
+# IDEs and editors
+# =========================
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+.vscode-test/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Local generated artifacts
+# =========================
+*.local
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
